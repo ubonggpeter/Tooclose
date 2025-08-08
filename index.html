@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MiAmor Slot Booking Incentives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root{
+      --blue-900:#001F4D;
+      --blue-700:#003399;
+      --blue-600:#0033cc;
+      --blue-500:#0072ff;
+      --blue-400:#3399ff;
+      --teal-300:#00E0FF;
+      --ink:#002255;
+      --bg1:#e8f4ff;
+      --bg2:#d0ebff;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+      min-height: 100%;
+    }
+
+    /* ===== Fixed Navbar ===== */
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      z-index: 2000; /* above content */
+      backdrop-filter: blur(6px);
+      background: linear-gradient( to right, rgba(0,31,77,.9), rgba(0,51,153,.85) );
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+    .menu-toggle {
+      appearance: none; border: 0; background: transparent; color: #fff;
+      font-size: 22px; width: 40px; height: 40px; border-radius: 8px;
+      display: grid; place-items: center; cursor: pointer;
+    }
+
+    .brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .brand img { height: 28px }
+    .brand span {
+      color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .nav-links { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+    .nav-links a { color: #fff; font-weight: 600; font-size: 14px; opacity:.95; }
+    .nav-links a:hover { opacity: 1; }
+
+    /* Mobile dropdown panel (overlays content) */
+    .nav-panel {
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: linear-gradient(180deg, rgba(0,31,77,.98), rgba(0,51,153,.95));
+      display: none;
+      flex-direction: column;
+      padding: 10px 14px 16px;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      z-index: 2001; /* stays above card */
+    }
+    .nav-panel a { color: #fff; font-weight: 600; padding: 10px 6px; border-radius: 8px; }
+
+    @media (max-width: 920px){
+      .nav-links { display: none }
+      .nav-panel.open { display: flex }
+    }
+
+    /* ===== Main wrapper ===== */
+    .page { padding-top: 72px; }
+
+    /* ===== Flyer Card ===== */
+    .flyer {
+      width: min(100%, 980px);
+      margin: 0 auto 64px;
+      padding: clamp(16px, 3vw, 28px);
+      text-align: center;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,51,204,.12);
+    }
+
+    .logo img { height: clamp(32px, 4vw, 44px) }
+
+    .title {
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 700;
+      color: var(--blue-600);
+      margin: 6px 0 4px;
+    }
+
+    .sub-title {
+      font-size: clamp(14px, 2.2vw, 18px);
+      font-weight: 500;
+      color: #555;
+      margin: 0 0 18px;
+    }
+
+    .incentives-box {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+      color: white;
+      border-radius: 20px;
+      padding: clamp(18px, 3.4vw, 28px);
+      text-align: left;
+      box-shadow: 0 10px 24px rgba(0, 51, 204, 0.25);
+      margin: 0 0 22px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .incentives-box p {
+      font-size: clamp(14px, 1.9vw, 16px);
+      margin: 0 0 14px;
+      line-height: 1.65;
+    }
+
+    .incentives-box p strong { color: var(--teal-300) }
+
+    .incentives-box hr {
+      border: 0; height: 1px; margin: 14px 0;
+      background: linear-gradient(to right, rgba(255,255,255,.0), rgba(255,255,255,.5), rgba(255,255,255,.0));
+    }
+
+    .highlight-note {
+      background-color: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--teal-300);
+      padding: clamp(12px, 2.5vw, 16px);
+      border-radius: 12px;
+      font-size: clamp(13px, 1.9vw, 15px);
+      line-height: 1.6;
+      box-shadow: inset 0 0 24px rgba(0,0,0,.06);
+    }
+
+    .cta-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(to right, #00c6ff, var(--blue-500));
+      color: white;
+      padding: 12px 22px;
+      font-weight: 700;
+      border-radius: 10px;
+      margin-top: 18px;
+      box-shadow: 0 6px 18px rgba(0, 102, 255, 0.28), inset 0 0 0 1px rgba(255,255,255,.12);
+      min-width: min(100%, 420px);
+      font-size: clamp(14px, 2vw, 16px);
+    }
+
+    .image { margin-top: 18px }
+    .image img { width: 100%; border-radius: 18px; display: block; height: auto; }
+
+    /* ===== Footer (glowing 3D gradient with zebra waves & icons) ===== */
+    .site-footer {
+      position: relative;
+      padding: 28px 16px 36px;
+      color: #fff;
+      overflow: hidden;
+      background:
+        radial-gradient(1200px 240px at 10% -10%, rgba(0,224,255,.25), rgba(0,0,0,0)),
+        radial-gradient(900px 300px at 90% -20%, rgba(51,153,255,.25), rgba(0,0,0,0)),
+        linear-gradient( to bottom right, var(--blue-900), var(--blue-700) );
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 -12px 32px rgba(0,0,0,.25);
+    }
+
+    /* zebra/heart-ish glow overlay */
+    .site-footer::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient( -45deg,
+          rgba(255,255,255,.08) 0 14px,
+          rgba(255,255,255,0) 14px 34px),
+        radial-gradient(60px 40px at 20% 30%, rgba(255,105,180,.20), rgba(0,0,0,0)),
+        radial-gradient(60px 40px at 80% 40%, rgba(0,224,255,.20), rgba(0,0,0,0));
+      mix-blend-mode: screen;
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    .footer-inner{
+      width: min(100%, 1100px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .footer-brand{ display:flex; align-items:center; gap:10px; }
+    .footer-brand img{ height: 30px }
+    .footer-brand strong{ font-size: 16px }
+
+    .footer-links{ display:flex; flex-wrap:wrap; gap:14px; }
+    .footer-links a{ color:#fff; font-weight:600; font-size:14px; opacity:.95; }
+    .footer-links a:hover{ opacity:1; }
+
+    .footer-bottom{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 12px; margin-top: 8px;
+    }
+
+    .socials{ display:flex; align-items:center; gap:12px }
+    .socials a{
+      width:36px; height:36px; display:grid; place-items:center; color:#001f4d;
+      background:#fff; border-radius:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.22), inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+    .socials a:active{ transform: translateY(1px) }
+
+    .copyright{ font-size: 13px; opacity:.95; }
+
+    @media (min-width: 680px){
+      .footer-inner{ grid-template-columns: 1.2fr .8fr; }
+      .footer-brand strong{ font-size: 18px }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="nav-left">
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a class="brand" href="#">
+        <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+        <span>MiAmor</span>
+      </a>
+    </div>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#">Home</a>
+      <a href="#">Packages</a>
+      <a href="#">How It Works</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <nav class="nav-panel" id="navPanel" aria-label="Mobile Menu">
+    <a href="#">Home</a>
+    <a href="#">Packages</a>
+    <a href="#">How It Works</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- CONTENT1 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">What Is Miamor Platform</h1>
+    <p class="sub-title">Discover how MiAmor connects hearts, builds skills, and creates income opportunities.</p>
+
+    <div class="incentives-box">
+      <p>🎯 <strong>MiAmor</strong> is a dynamic platform operating across multiple African and foreign countries, designed to help users find love, earn income through networking, and gain valuable skills.</p>
+      <hr>
+      <p>🎯 It fosters meaningful connections, financial opportunities, and personal growth for people of all backgrounds.</p>
+      <hr>
+      <p>🎯 MiAmor combines relationship-building with entrepreneurship and skill development, with a strong focus on community and empowerment.</p>
+
+      <div class="highlight-note">
+        <strong>Join MiAmor today and unlock the perfect blend of love, income, and skills for a brighter future.</strong><br />
+        Take charge of your relationships and finances — connect, grow, and succeed with MiAmor.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN MIAMOR NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Platform Image">
+    </div>
+  </section>
+</main>
+
+
+
+  <!-- CONTENT2-->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">Earn Playing Different Games and Win Big on MiAmor!</h1>
+    <p class="sub-title">Gaming meets real rewards on MiAmor in 3 easy steps.</p>
+
+    <div class="incentives-box">
+      <p>1. <strong>Fund your game wallet</strong> quickly and securely.</p>
+      <hr>
+      <p>2. <strong>Choose</strong> from a variety of exciting and available games, and start playing instantly.</p>
+      <hr>
+      <p>3. <strong>Win</strong> and withdraw your cash prizes straight to your bank account with no delays.</p>
+
+      <div class="highlight-note">
+        <strong>Whether you’re in it for fun or competition, every win translates into real earnings.</strong><br />
+        The best part? You can withdraw your winnings directly to your bank account. Play smart. Win real. Get paid. 
+        Your next game on MiAmor could be your next big payout — join today, start playing, and let every win bring you closer to amazing rewards!
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">PLAY AND WIN NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Gaming Image">
+    </div>
+  </section>
+</main>
+
+
+
+  <!-- CONTENT 3 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">Turn Social Shares into Daily Earnings on MiAmor!</h1>
+    <p class="sub-title">Love creating content on TikTok and Facebook? With MiAmor, every share is a money-making opportunity!</p>
+
+    <div class="incentives-box">
+      <p>Earn up to <strong>$2.5 daily</strong> just for sharing your videos to TikTok or Facebook directly from MiAmor.</p>
+      <hr>
+      <p>It doesn’t stop there — you can also create fun, engaging <strong>duets with other users' videos</strong> and watch your earnings grow even more.</p>
+      <hr>
+      <p><strong>Create. Share. Earn.</strong> It’s not just social media anymore — it’s a stream of income. Go viral <em>and</em> get paid — only on MiAmor.</p>
+
+      <div class="highlight-note">
+        <strong>Start today and make every post count!</strong><br />
+        Join thousands already earning daily. Your next video could be your next payday — don’t just scroll, start earning now.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">START SHARING & EARNING NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Social Earnings Image">
+    </div>
+  </section>
+</main>
+
+
+
+<!-- CONTENT 4-->
+  <main class="page">
+    <section class="flyer" aria-labelledby="title">
+      <div class="logo">
+        <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+      </div>
+
+      <h1 id="title" class="title">Introducing the MiAmor Couples Challenge – Love, Fun, and ₦300,000 Up for Grabs!</h1>
+      <p class="sub-title">It’s the season of love, and MiAmor is turning up the excitement!</p>
+
+      <div class="incentives-box">
+        <p>We've launched an exclusive <strong>Couples Challenge</strong> for lovebirds on our platform, where the <strong>Top 3 winning couples</strong> will share <strong>₦300,000</strong> in cash prizes!</p>
+        <hr>
+        <p>Joining is easy:<br>
+        1. <strong>Sign up</strong> on MiAmor<br>
+        2. <strong>Choose your preferred love partner</strong><br>
+        3. <strong>Join the contest</strong><br>
+        4. <strong>Compete and win!</strong></p>
+        <hr>
+        <p>💙 Showcase your bond, complete fun tasks, and let your love story shine.</p>
+
+        <div class="highlight-note">
+          <strong>Fall in love, rise to the top, and walk away with cash.</strong><br />
+          Only on <strong>MiAmor</strong> — where love wins big! Join now, prove your love, and let the world see your spark.
+        </div>
+      </div>
+
+      <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN THE COUPLES CHALLENGE NOW</a>
+
+      <div class="image">
+        <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Couples Challenge Image">
+      </div>
+    </section>
+  </main>
+
+
+
+<!-- CONTENT 5 -->
+  <main class="page">
+    <section class="flyer" aria-labelledby="title">
+      <div class="logo">
+        <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+      </div>
+
+      <h1 id="title" class="title">Where Learning Stops, Growth Stops — But Not on MiAmor</h1>
+      <p class="sub-title">At MiAmor, true connection goes beyond romance — it’s about personal growth and empowerment.</p>
+
+      <div class="incentives-box">
+        <p>We’ve built a powerful learning hub right into our platform, giving every user access to essential, high-demand skills for today’s digital world.</p>
+        <hr>
+        <p>Learn <strong>Digital Marketing, Copywriting, Mini Importation, Dropshipping, Microsoft Office tools, Website & App Development, Graphic Design, UI/UX, Freelancing, Social Media Management, Business Management</strong>, and much more.</p>
+        <hr>
+        <p><strong>Expand your potential. Secure your future.</strong> On MiAmor, it’s not just about finding love — it’s about building a better you. Join now, upgrade your skills, and open doors to limitless opportunities.</p>
+
+        <div class="highlight-note">
+          <strong>Your growth journey starts here.</strong><br />
+          Don’t wait — connect, learn, and thrive with MiAmor today.
+        </div>
+      </div>
+
+      <a class="cta-link" href="#" target="_blank" rel="noopener">START LEARNING & CONNECTING NOW</a>
+
+      <div class="image">
+        <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Learning Hub">
+      </div>
+    </section>
+  </main>
+
+
+
+  <!-- CONTENT 6-->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">MiAmor’s Sell It Sector</h1>
+    <p class="sub-title">MiAmor’s Trusted Marketplace for Every User.</p>
+
+    <div class="incentives-box">
+      <p>🏪 <strong>MIAMOR’S Sell It Sector — MiAmor’s Trusted Marketplace!</strong></p>
+      <hr>
+      <p>✅ MiAmor isn’t just about love — it’s also about opportunity.</p>
+      <hr>
+      <p>🏪 With our <strong>Sell It Sector</strong>, every user gets access to a secure, user-friendly platform to <strong>trade legal items</strong> with ease.</p>
+      <hr>
+      <p>🏪 Whether you're selling gadgets, fashion, or personal items, our system connects you with <strong>readily available buyers</strong> on the site.</p>
+      <hr>
+      <p>🏪 No stress, no middlemen — just smooth, direct transactions.</p>
+
+      <div class="highlight-note">
+        💯 <strong>List. Connect. Sell.</strong> Turn your unused items into quick cash while enjoying everything MiAmor offers.  
+        <br><br>
+        🌟 Join today, showcase your products, and watch them sell fast. Your perfect buyer could be just one click away — don’t miss the chance to earn effortlessly while staying connected on MiAmor.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">START SELLING NOW ON MIAMOR</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="Sell It Sector Image">
+    </div>
+  </section>
+</main>
+
+
+
+  <!-- CONTENT 7-->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">MiAmor Multinational Love & Earning Platform – Connect & Earn Across Africa</h1>
+    <p class="sub-title">Where love meets limitless opportunities across borders.</p>
+
+    <div class="incentives-box">
+      <p>🚀 <strong>MiAmor</strong> is a true multinational platform, bringing people together across borders.</p>
+      <hr>
+      <p>🚀 Whether you're in <strong>Ghana, Kenya, Uganda, Sierra Leone, Cameroon</strong>, or beyond, MiAmor offers you the unique opportunity to <strong>find love while earning from multiple countries</strong>.</p>
+      <hr>
+      <p>🚀 Join thousands who are already building relationships and generating income across Africa and the world. With MiAmor, <strong>love and opportunity know no boundaries</strong>. Start today, connect with real people, grow your network, and unlock a world of romance and income potential only MiAmor can offer you.</p>
+
+      <div class="highlight-note">
+        <strong>💡 Your perfect match and earning opportunity are just one click away.</strong><br />
+        Sign up now, meet amazing people, and start earning instantly. The world is waiting for you – don’t keep it waiting.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN MIAMOR & START EARNING TODAY</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Global Love and Earning Platform">
+    </div>
+  </section>
+</main>
+
+
+
+
+  <!-- CONTENT 8 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">MiAmor Platform Combined Automated Features – Earn, Connect & Enjoy</h1>
+    <p class="sub-title">Discover the all-in-one features of MiAmor that bring love, fun, and financial freedom together.</p>
+
+    <div class="incentives-box">
+      <p>🎯 <strong>MIAMOR COMBINED AUTOMATED FEATURES</strong></p>
+      <hr>
+      <p>🧠 <strong>Get Matched and Earn</strong></p>
+      <p>🎮 <strong>Play Games and Earn</strong></p>
+      <p>📲 <strong>Social Media Monetization</strong></p>
+      <p>🎥 <strong>TikTok & Facebook Duets</strong></p>
+      <p>📤 <strong>Share and Earn</strong></p>
+      <p>🏆 <strong>Rank Bonuses</strong></p>
+      <p>🎁 <strong>Miamor Incentives</strong></p>
+      <p>🎟️ <strong>Miamor Raffle Draws</strong></p>
+      <p>🎁 <strong>Love Hamper for Everyone</strong></p>
+      <p>💑 <strong>Couples Trips</strong></p>
+      <p>💬 <strong>Daily Relationship Tips</strong></p>
+      <p>📚 <strong>E-books for Your Growth</strong></p>
+      <p>💵 <strong>General Contest for Cash</strong></p>
+      <p>🧠 <strong>Advanced Skill Set</strong></p>
+      <p>💼 <strong>Job Sector</strong></p>
+      <p>🛒 <strong>Sell IT Sector</strong></p>
+      <p>...and lots more exciting opportunities to grow your income, skills, and relationships.</p>
+
+      <div class="highlight-note">
+        ✅ <strong>Sign up today on MiAmor and start your journey to love, fun, and financial freedom.</strong><br />
+        Don’t miss out—thousands are already benefiting daily. The earlier you join, the faster you earn, connect, and enjoy exclusive rewards designed for you.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN MIAMOR NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Features Image">
+    </div>
+  </section>
+</main>
+
+
+
+
+  <!-- CONTENT 9 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">MiAmor Official CAC Registration – 100% Legit and Trusted</h1>
+    <p class="sub-title">We’re proud to share our official milestone with you.</p>
+
+    <div class="incentives-box">
+      <p>💯 <strong>MIAMOR IS NOW OFFICIALLY REGISTERED</strong></p>
+      <hr>
+      <p>✨ We’re excited to officially announce that Miamor is now fully registered with the <strong>Corporate Affairs Commission (CAC)</strong>! This means Miamor is a <strong>legally recognized and legitimate platform</strong> you can trust.</p>
+      <hr>
+      <p>✨ Our commitment to transparency, growth, and long-term impact is stronger than ever—and this is just the beginning. With our CAC registration in place, you can now <strong>confidently promote Miamor</strong>, knowing you're part of a fully compliant and credible project.</p>
+      <hr>
+      <p>🚀 Join us today, share the good news, invite your friends, and be part of Miamor’s success story. This is your chance to grow with a registered, credible, and unstoppable platform. Don’t wait—opportunities like this don’t last forever!</p>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN THE REGISTERED MIAMOR PLATFORM NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor CAC Registration Announcement">
+    </div>
+  </section>
+</main>
+
+
+  <!-- CONTENT. 10 -->
+  <main class="page">
+    <section class="flyer" aria-labelledby="title">
+      <div class="logo">
+        <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+      </div>
+
+      <h1 id="title" class="title">Slots Booking Incentives</h1>
+      <p class="sub-title">Earn instant bonuses when you book more slots on launch day.</p>
+
+      <div class="incentives-box">
+        <p>For every <strong>150 slots</strong> booked and registered on the first day of launch, you get an additional <strong>35,000 cash</strong> prize immediately.</p>
+        <hr>
+        <p>For every <strong>100 slots</strong> booked and registered on the first day you get an additional <strong>15,000</strong>.</p>
+        <hr>
+        <p>Imagine booking up to <strong>450 slots</strong>. This means you get <strong>35,000 × 3 = 105,000</strong> paid to you immediately.</p>
+
+        <div class="highlight-note">
+          <strong>The higher you book slots, the higher the bonuses you get.</strong><br />
+          All these can be claimed on the first day of launch and paid instantly to your bank account.
+        </div>
+      </div>
+
+      <a class="cta-link" href="#" target="_blank" rel="noopener">START BOOKING YOUR SLOTS NOW</a>
+
+      <div class="image">
+        <img src="IMG-20250803-WA0063.jpg" alt="Slots Incentive Image">
+      </div>
+    </section>
+  </main>
+
+
+  <!-- CONTENT. 11 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="https://miamorweb.site/miamor-logo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">Why You Should Choose the MiAmor Platform – Trusted, Secure & Rewarding</h1>
+    <p class="sub-title">Discover the unbeatable benefits of joining MiAmor today.</p>
+
+    <div class="incentives-box">
+      <p>1. 🔒 <strong>Top-Notch Data Protection</strong> – Your information is safe with us.</p>
+      <hr>
+      <p>2. 🧡 <strong>User First, Always</strong> – You are our top priority.</p>
+      <hr>
+      <p>3. 🖥️ <strong>User-Friendly System</strong> – Smooth and easy navigation.</p>
+      <hr>
+      <p>4. 🔍 <strong>Full Transparency</strong> – No hidden terms, just honesty.</p>
+      <hr>
+      <p>5. ✅ <strong>Guaranteed Privacy</strong> – Your data stays private and protected.</p>
+      <hr>
+      <p>6. 👩‍💼 <strong>Instant Customer Support</strong> – Live reps always ready to assist.</p>
+      <hr>
+      <p>7. 🌍 <strong>Globally Recognized</strong> – Trusted around the world.</p>
+      <hr>
+      <p>8. ⚡ <strong>Fast Commission Payouts</strong> – No delays, just quick earnings.</p>
+      <hr>
+      <p>9. 💘 <strong>One-Click Matching</strong> – Find your match instantly.</p>
+
+      <div class="highlight-note">
+        ✨ ...And so much more awaits you! Join now and experience the MiAmor advantage.  
+        🚀 Take the leap today, unlock your earning potential, and enjoy a safe, exciting, and rewarding digital journey with MiAmor.
+      </div>
+    </div>
+
+    <a class="cta-link" href="#" target="_blank" rel="noopener">JOIN MIAMOR NOW</a>
+
+    <div class="image">
+      <img src="IMG-20250803-WA0063.jpg" alt="MiAmor Advantages Image">
+    </div>
+  </section>
+</main>
+
+
+
+  
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <img src="Miamorflower.png" alt="MiAmor Flower">
+          <strong>MiAmor Platform</strong>
+        </div>
+        <p style="margin:8px 0 0; max-width:56ch; opacity:.95;">
+          Entertainment meets income. Join MiAmor, book slots, and earn rewards instantly.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-links" aria-label="Footer">
+          <a href="#">About</a>
+          <a href="#">FAQs</a>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Support</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="socials" aria-label="Social links">
+          <a href="https://wa.me/" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://t.me/" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://www.tiktok.com/" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://twitter.com/" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://facebook.com/" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+        <div class="copyright">
+          © <span id="year"></span> MiAmor. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const panel  = document.getElementById('navPanel');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close panel if resizing to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 920 && panel.classList.contains('open')) {
+        panel.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
