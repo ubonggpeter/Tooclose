@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MiAmor Platform | Earn Online in Nigeria | Reviews, Tasks & Fast Withdrawals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root{
+      --blue-900:#001F4D;
+      --blue-700:#003399;
+      --blue-600:#0033cc;
+      --blue-500:#0072ff;
+      --blue-400:#3399ff;
+      --teal-300:#00E0FF;
+      --ink:#002255;
+      --bg1:#e8f4ff;
+      --bg2:#d0ebff;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+      min-height: 100%;
+    }
+
+    /* ===== Fixed Navbar ===== */
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 14px;
+      z-index: 2000; /* above content */
+      backdrop-filter: blur(6px);
+      background: linear-gradient( to right, rgba(0,31,77,.9), rgba(0,51,153,.85) );
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+    .menu-toggle {
+      appearance: none; border: 0; background: transparent; color: #fff;
+      font-size: 22px; width: 40px; height: 40px; border-radius: 8px;
+      display: grid; place-items: center; cursor: pointer;
+    }
+
+    .brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .brand img { height: 28px }
+    .brand span {
+      color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .nav-links { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+    .nav-links a { color: #fff; font-weight: 600; font-size: 14px; opacity:.95; }
+    .nav-links a:hover { opacity: 1; }
+
+    /* Mobile dropdown panel (overlays content) */
+    .nav-panel {
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: linear-gradient(180deg, rgba(0,31,77,.98), rgba(0,51,153,.95));
+      display: none;
+      flex-direction: column;
+      padding: 10px 14px 16px;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      z-index: 2001; /* stays above card */
+    }
+    .nav-panel a { color: #fff; font-weight: 600; padding: 10px 6px; border-radius: 8px; }
+
+    @media (max-width: 920px){
+      .nav-links { display: none }
+      .nav-panel.open { display: flex }
+    }
+
+    /* ===== Main wrapper ===== */
+    .page { padding-top: 72px; }
+
+    /* ===== Flyer Card ===== */
+    .flyer {
+      width: min(100%, 980px);
+      margin: 0 auto 64px;
+      padding: clamp(16px, 3vw, 28px);
+      text-align: center;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,51,204,.12);
+    }
+
+    .logo img { height: clamp(32px, 4vw, 44px) }
+
+    .title {
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 700;
+      color: var(--blue-600);
+      margin: 6px 0 4px;
+    }
+
+    .sub-title {
+      font-size: clamp(14px, 2.2vw, 18px);
+      font-weight: 500;
+      color: #555;
+      margin: 0 0 18px;
+    }
+
+    .incentives-box {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+      color: white;
+      border-radius: 20px;
+      padding: clamp(18px, 3.4vw, 28px);
+      text-align: left;
+      box-shadow: 0 10px 24px rgba(0, 51, 204, 0.25);
+      margin: 0 0 22px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .incentives-box p {
+      font-size: clamp(14px, 1.9vw, 16px);
+      margin: 0 0 14px;
+      line-height: 1.65;
+    }
+
+    .incentives-box p strong { color: var(--teal-300) }
+
+    .incentives-box hr {
+      border: 0; height: 1px; margin: 14px 0;
+      background: linear-gradient(to right, rgba(255,255,255,.0), rgba(255,255,255,.5), rgba(255,255,255,.0));
+    }
+
+    .highlight-note {
+      background-color: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--teal-300);
+      padding: clamp(12px, 2.5vw, 16px);
+      border-radius: 12px;
+      font-size: clamp(13px, 1.9vw, 15px);
+      line-height: 1.6;
+      box-shadow: inset 0 0 24px rgba(0,0,0,.06);
+    }
+
+    .cta-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(to right, #00c6ff, var(--blue-500));
+      color: white;
+      padding: 12px 22px;
+      font-weight: 700;
+      border-radius: 10px;
+      margin-top: 18px;
+      box-shadow: 0 6px 18px rgba(0, 102, 255, 0.28), inset 0 0 0 1px rgba(255,255,255,.12);
+      min-width: min(100%, 420px);
+      font-size: clamp(14px, 2vw, 16px);
+    }
+
+    .image { margin-top: 18px }
+    .image img { width: 100%; border-radius: 18px; display: block; height: auto; }
+
+    /* ===== Footer (glowing 3D gradient with zebra waves & icons) ===== */
+    .site-footer {
+      position: relative;
+      padding: 28px 16px 36px;
+      color: #fff;
+      overflow: hidden;
+      background:
+        radial-gradient(1200px 240px at 10% -10%, rgba(0,224,255,.25), rgba(0,0,0,0)),
+        radial-gradient(900px 300px at 90% -20%, rgba(51,153,255,.25), rgba(0,0,0,0)),
+        linear-gradient( to bottom right, var(--blue-900), var(--blue-700) );
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 -12px 32px rgba(0,0,0,.25);
+    }
+
+    /* zebra/heart-ish glow overlay */
+    .site-footer::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient( -45deg,
+          rgba(255,255,255,.08) 0 14px,
+          rgba(255,255,255,0) 14px 34px),
+        radial-gradient(60px 40px at 20% 30%, rgba(255,105,180,.20), rgba(0,0,0,0)),
+        radial-gradient(60px 40px at 80% 40%, rgba(0,224,255,.20), rgba(0,0,0,0));
+      mix-blend-mode: screen;
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    .footer-inner{
+      width: min(100%, 1100px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .footer-brand{ display:flex; align-items:center; gap:10px; }
+    .footer-brand img{ height: 30px }
+    .footer-brand strong{ font-size: 16px }
+
+    .footer-links{ display:flex; flex-wrap:wrap; gap:14px; }
+    .footer-links a{ color:#fff; font-weight:600; font-size:14px; opacity:.95; }
+    .footer-links a:hover{ opacity:1; }
+
+    .footer-bottom{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 12px; margin-top: 8px;
+    }
+
+    .socials{ display:flex; align-items:center; gap:12px }
+    .socials a{
+      width:36px; height:36px; display:grid; place-items:center; color:#001f4d;
+      background:#fff; border-radius:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.22), inset 0 0 0 1px rgba(0,0,0,.08);
+    }
+    .socials a:active{ transform: translateY(1px) }
+
+    .copyright{ font-size: 13px; opacity:.95; }
+
+    @media (min-width: 680px){
+      .footer-inner{ grid-template-columns: 1.2fr .8fr; }
+      .footer-brand strong{ font-size: 18px }
+    }
+  </style>
+<link rel="canonical" href="https://miamorplatform.site/index.html">
+<meta name="description" content="Register on MiAmor Platform — Nigeria’s hub for earning online with smartphone tasks, stream‑and‑review jobs, and ethical referrals. Real reviews, daily tasks, and fast NGN withdrawals.">
+<meta name="keywords" content="MiAmor website, MiAmor registration, earn online in Nigeria, smartphone tasks, streaming jobs, reviews, MiAmor withdrawal, referrals, daily earnings">
+<meta name="author" content="MiAmor Platform">
+<meta property="og:title" content="MiAmor Platform | Register & Start Earning">
+<meta property="og:description" content="Join MiAmor to earn online with smartphone tasks, stream-and-review jobs, and optional referrals. Fast NGN withdrawals and 24/7 support.">
+<meta property="og:image" content="https://miamorplatform.site/MiAmorSocialEarningsImage.jpg">
+<meta property="og:url" content="https://miamorplatform.site">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MiAmor Platform | Register & Earn Online">
+<meta name="twitter:description" content="Earn with smartphone tasks, streaming engagements, and reviews. Referrals are optional but boost earnings. Join MiAmor today.">
+<meta name="twitter:image" content="https://miamorplatform.site/MiAmor SocialEarningsImage.jpg">
+<link rel="preload" href="style.css" as="style">
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" href="MiamorLogo.png" type="image/png">
+
+<!-- Structured Data: WebPage + FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Register on MiAmor Platform | MiAmor App | How to Sign Up and Earn",
+  "url": "https://miamorplatform.site/miamor_registration.html",
+  "description": "Create your MiAmor account and start earning with smartphone tasks, stream-and-review jobs, and daily challenges. Referrals are optional — you can earn from tasks alone.",
+  "keywords": [
+    "miamorplatform.site",
+    "MiAmor registration",
+    "earn online Nigeria",
+    "Miamor smartphone tasks",
+    "Miamor Dating Site",
+    "MiAmor App",
+    "MiAmor withdrawal",
+    "how to register on MiAmor",
+    "is MiAmor legit",
+    "MiAmor platform Nigeria"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "MiAmor Platform",
+    "url": "https://miamorplatform.site",
+    "logo": "https://miamorplatform.site/miamor-logo.png",
+    "description": "MiAmor is a skills-and-earnings platform where Nigerians complete simple smartphone tasks, stream-and-review content, and optionally refer friends for bonuses.",
+    "sameAs": [
+      "https://miamorplatform.site",
+      "https://linktr.ee/MiAmor_registration"
+    ]
+  },
+  "potentialAction": {
+    "@type": "Action",
+    "name": "Register on MiAmor Platform",
+    "url": "https://miamorplatform.site/miamor_registration.html"
+  },
+  "mainEntity": {
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is MiAmor Platform?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MiAmor is a Nigerian earn‑online platform that rewards you for completing simple smartphone tasks, stream‑and‑review jobs, and daily challenges. You can also boost earnings with optional referrals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much is the registration fee?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can start with the Plus package (₦9,000) or upgrade to Ultra (₦14,000) for higher daily limits and bonuses. One‑time payment—no monthly billing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I earn on MiAmor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Complete smartphone tasks (likes, comments, shares), stream‑and‑review content, post captions, and participate in daily challenges. Referrals are optional but increase your earning potential."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are referrals required to earn?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. You can earn from tasks alone. Referrals are optional and only add extra bonuses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do withdrawals work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Withdrawals are requested from your dashboard and paid to Nigerian bank accounts once you meet the minimum threshold. Processing is typically fast on business days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a mobile app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MiAmor runs smoothly on mobile browsers and can be added to your home screen. An Android app shell is available via WebView for a native‑like experience."
+        }
+      }
+    ]
+  }
+}
+</script>
+
+<!-- Structured Data: WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "MiAmor Platform",
+  "url": "https://miamorplatform.site",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://miamorplatform.site/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- Structured Data: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MiAmor Platform",
+  "url": "https://miamorplatform.site",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://miamorplatform.site/MiamorLogo.png",
+    "width": 250,
+    "height": 250
+  },
+  "sameAs": [
+    "https://linktr.ee/MiAmor_Website"
+  ]
+}
+</script>
+
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://miamorplatform.site"},
+    {"@type": "ListItem", "position": 2, "name": "Register", "item": "https://miamorplatform.site/miamor_registration.html"}
+  ]
+}
+</script>
+
+<!-- Structured Data: Product / Offer -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "MiAmor Registration Packages",
+  "image": "https://miamorplatform.site/miamor-product.jpg",
+  "description": "Choose Plus (₦9,000) or Ultra (₦14,000) to unlock daily smartphone tasks, stream‑and‑review jobs, and bonuses. One‑time fee—no subscription.",
+  "brand": {"@type": "Organization", "name": "MiAmor Platform"},
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "NGN",
+    "lowPrice": "9000",
+    "highPrice": "14000",
+    "offerCount": "2",
+    "availability": "https://schema.org/InStock",
+    "url": "https://miamorplatform.site/miamor_registration.html"
+  }
+}
+</script>
+
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="nav-left">
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a class="brand" href="#">
+        <img src="MiamorLogo.png" alt="MiAmor Logo">
+        <span>MiAmor</span>
+      </a>
+    </div>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#">Home</a>
+      <a href="#">Packages</a>
+      <a href="#">How It Works</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <nav class="nav-panel" id="navPanel" aria-label="Mobile Menu">
+    <a href="#">Home</a>
+    <a href="#">Packages</a>
+    <a href="#">How It Works</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- CONTENT1 -->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="MiamorLogo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">What Is Miamor Platform</h1>
+    <p class="sub-title">Discover how MiAmor connects hearts, builds skills, and creates income opportunities.</p>
+
+    <div class="incentives-box">
+      <p>🎯 <strong>MiAmor</strong> is a dynamic platform operating across multiple African and foreign countries, designed to help users find love, earn income through networking, and gain valuable skills.</p>
+      <hr>
+      <p>🎯 It fosters meaningful connections, financial opportunities, and personal growth for people of all backgrounds.</p>
+      <hr>
+      <p>🎯 MiAmor combines relationship-building with entrepreneurship and skill development, with a strong focus on community and empowerment.</p>
+
+      <div class="highlight-note">
+        <strong>Join MiAmor today and unlock the perfect blend of love, income, and skills for a brighter future.</strong><br />
+        Take charge of your relationships and finances — connect, grow, and succeed with MiAmor.
+      </div>
+    </div>
+
+    <a class="cta-link" href="https://link-tree.site/" target="_blank" rel="noopener">JOIN MIAMOR NOW</a>
+
+    <div class="image">
+      <img src="MiAmorPlatformImage.jpg" alt="MiAmor Platform Image">
+    </div>
+  </section>
+</main>
+
+
+
+  <!-- CONTENT2-->
+<main class="page">
+  <section class="flyer" aria-labelledby="title">
+    <div class="logo">
+      <img src="MiamorLogo.png" alt="MiAmor Logo">
+    </div>
+
+    <h1 id="title" class="title">Earn Playing Different Games and Win Big on MiAmor!</h1>
+    <p class="sub-title">Gaming meets real rewards on MiAmor in 3 easy steps.</p>
+
+    <div class="incentives-box">
+      <p>1. <strong>Fund your game wallet</strong> quickly and securely.</p>
+      <hr>
+      <p>2. <strong>Choose</strong> from a variety of exciting and available games, and start playing instantly.</p>
+      <hr>
+      <p>3. <strong>Win</strong> and withdraw your cash prizes straight to your bank account with no delays.</p>
+
+      <div class="highlight-note">
+        <strong>Whether you’re in it for fun or competition, every win translates into real earnings.</strong><br />
+        The best part? You can withdraw your winnings directly to your bank account. Play smart. Win real. Get paid. 
+        Your next game on MiAmor could be your next big payout — join today, start playing, and let every win bring you closer to amazing rewards!
+      </div>
+    </div>
+
+    <a class="cta-link" href="https://link-tree.site/" target="_blank" rel="noopener">PLAY AND WIN NOW</a>
+
+    <div class="image">
+      <img src="MiAmorGamingImage.jpg" alt="MiAmorGaming Image">
+    </div>
+  </section>
+</main>
+
+
+  
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <img src="MiamorLogo.png" alt="MiAmor Logo">
+          <strong>MiAmor Platform</strong>
+        </div>
+        <p style="margin:8px 0 0; max-width:56ch; opacity:.95;">
+          Entertainment meets income. Join MiAmor, book slots, and earn rewards instantly.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-links" aria-label="Footer">
+          <a href="https://link-tree.site/">About</a>
+          <a href="https://link-tree.site/">FAQs</a>
+          <a href="https://link-tree.site/">Terms</a>
+          <a href="https://link-tree.site/">Privacy</a>
+          <a href="https://link-tree.site/">Support</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="socials" aria-label="Social links">
+          <a href="https://wa.me/2348157823869?text=I%20am%20ready%20to%20register%20on%20Mi-amor%" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://wa.me/2348157823869?text=I%20am%20ready%20to%20register%20on%20Mi-amor%" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://wa.me/2348157823869?text=I%20am%20ready%20to%20register%20on%20Mi-amor%" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/2348157823869?text=I%20am%20ready%20to%20register%20on%20Mi-amor%" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://wa.me/2348157823869?text=I%20am%20ready%20to%20register%20on%20Mi-amor%" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+        <div class="copyright">
+          © <span id="year"></span> MiAmor. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const panel  = document.getElementById('navPanel');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close panel if resizing to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 920 && panel.classList.contains('open')) {
+        panel.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
